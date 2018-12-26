@@ -1,4 +1,5 @@
-# mysql5.7StudyOrMycat
+# mysql5.7StudyAndMycat
+
 1、msyql5.7新特性
 
 2、mysql架构设计
