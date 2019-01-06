@@ -1,0 +1,27 @@
+#!/bin/bash
+#/usr/local/bin/mycat_status.sh
+# This script checks if a mycat server is healthy running on localhost. It will
+# return:
+#
+# "HTTP/1.x 200 OK\r" (if mycat is running smoothly)
+#
+# "HTTP/1.x 503 Internal Server Error\r" (else)
+mycat=`/usr/local/mycat/bin/mycat status |grep 'not running'| wc -l`
+if [ "$mycat" = "0" ];
+then
+    /bin/echo -en "HTTP/1.1 200 OK\r\n" 
+    /bin/echo -en "Content-Type: text/plain\r\n" 
+    /bin/echo -en "Connection: close\r\n" 
+    /bin/echo -en "Content-Length: 40\r\n" 
+    /bin/echo -en "\r\n" 
+    /bin/echo -en "MyCAT  Cluster Node is synced.\r\n" 
+    exit 0
+else
+    /bin/echo -en "HTTP/1.1 503 Service Unavailable\r\n" 
+    /bin/echo -en "Content-Type: text/plain\r\n" 
+    /bin/echo -en "Connection: close\r\n" 
+    /bin/echo -en "Content-Length: 44\r\n" 
+    /bin/echo -en "\r\n" 
+    /bin/echo -en "MyCAT Cluster Node is not synced.\r\n" 
+    exit 1
+fi

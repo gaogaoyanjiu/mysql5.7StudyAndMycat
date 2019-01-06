@@ -1,0 +1,14 @@
+# default: on 
+# description: monitor for mycat
+service mycatchk
+{
+flags = REUSE
+socket_type = stream
+port = 48700
+wait = no
+user = root
+server =/usr/local/bin/mycat_status
+log_on_failure += USERID
+disable = no
+per_source      = UNLIMITED 
+}
